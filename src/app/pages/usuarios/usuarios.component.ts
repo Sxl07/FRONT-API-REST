@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ConexionAPIService } from '../../services/conexion-api.service';
 import { Router } from '@angular/router';
-import { Persona } from '../../interfaces/persona.interface';
-import Swal from 'sweetalert2';
+import { Usuario } from '../../interfaces/usuario.interface';
 
 @Component({
-  selector: 'app-personas',
-  templateUrl: './personas.component.html',
-  styleUrl: './personas.component.css'
+  selector: 'app-usuarios',
+  templateUrl: './usuarios.component.html',
+  styleUrl: './usuarios.component.css'
 })
-export class PersonasComponent {
-  personas!: any;
+export class UsuariosComponent {
+  usuarios!: any;
   unResultado :any;
   unaAccion!:string;
   unMensaje!:string;
@@ -23,29 +23,28 @@ export class PersonasComponent {
 
 
   ngOnInit() {
-    this.cargarPersonasBD();
+    this.cargarUsuariosBD();
   }
 
-  editarPersona(unIdPersona:number) {
-    console.log("PERSONA ESCOGIDA",unIdPersona);
-    this.router.navigate(['/persona', unIdPersona]);
+  editarUsuario(unIdUsuario:number) {
+    console.log("USUARIO ESCOGIDO",unIdUsuario);
+    this.router.navigate(['/usuario', unIdUsuario]);
   }
 
-  async cargarPersonasBD() {
+  async cargarUsuariosBD() {
     await this.dataBD
-      .getPersonas()
+      .getUsuarios()
       .toPromise()
       .then((data: any) => {
-        this.personas = data;
-        console.log(this.personas)
+        this.usuarios = data;
+        console.log(this.usuarios)
       });
   }
 
-  
 
-  eliminarPersona(unaPersona:Persona){
+  eliminarUsuario(unUsuario:Usuario){
       //console.log(this.unaDivision);
-      this.dataBD.crud_Personas(unaPersona, 'eliminar').subscribe(
+      this.dataBD.crud_Usuarios(unUsuario, 'eliminar').subscribe(
         (res: any) => {
           this.unResultado = res;
   
@@ -55,21 +54,21 @@ export class PersonasComponent {
              Swal.fire({
               icon: 'info',
               title: 'Registro eliminado',
-              text: 'Persona Eliminada',
+              text: 'Usuario Eliminado',
             });
   
             this.unaAccion = 'Mensaje:';
-            this.unMensaje = 'Persona Eliminada';
+            this.unMensaje = 'Usuario Eliminado';
             setTimeout(() => (this.unMensaje = ''), 3000);
   
   
-            this.cargarPersonasBD() ;
+            this.cargarUsuariosBD() ;
   
           } else {
             Swal.fire({
               icon: 'info',
               title: 'Error',
-              text: this.unResultado.msg + "Error:" + this.unResultado.error.original.sqlMessage,
+              text: this.unResultado.msg + "Error:"+this.unResultado.err.original.sqlMessage
             });
       
   
@@ -83,6 +82,4 @@ export class PersonasComponent {
         }
       );
     }
-  }
-
-
+}

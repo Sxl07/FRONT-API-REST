@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { ConexionAPIService } from '../../services/conexion-api.service';
 import { Router } from '@angular/router';
-import { Persona } from '../../interfaces/persona.interface';
 import Swal from 'sweetalert2';
+import { Ciudad } from '../../interfaces/ciudad.interface';
 
 @Component({
-  selector: 'app-personas',
-  templateUrl: './personas.component.html',
-  styleUrl: './personas.component.css'
+  selector: 'app-ciudades',
+  templateUrl: './ciudades.component.html',
+  styleUrl: './ciudades.component.css'
 })
-export class PersonasComponent {
-  personas!: any;
+export class CiudadesComponent {
+  ciudades!: any;
   unResultado :any;
   unaAccion!:string;
   unMensaje!:string;
@@ -23,29 +23,27 @@ export class PersonasComponent {
 
 
   ngOnInit() {
-    this.cargarPersonasBD();
+    this.cargarCiudadesBD();
   }
 
-  editarPersona(unIdPersona:number) {
-    console.log("PERSONA ESCOGIDA",unIdPersona);
-    this.router.navigate(['/persona', unIdPersona]);
+  editarCiudad(unIdCiudad:number) {
+    console.log("CIUDAD ESCOGIDA",unIdCiudad);
+    this.router.navigate(['/ciudad', unIdCiudad]);
   }
 
-  async cargarPersonasBD() {
+  async cargarCiudadesBD() {
     await this.dataBD
-      .getPersonas()
+      .getCiudades()
       .toPromise()
       .then((data: any) => {
-        this.personas = data;
-        console.log(this.personas)
+        this.ciudades = data;
+        console.log(this.ciudades)
       });
   }
 
-  
-
-  eliminarPersona(unaPersona:Persona){
+  eliminarCiudad(unaCiudad:Ciudad){
       //console.log(this.unaDivision);
-      this.dataBD.crud_Personas(unaPersona, 'eliminar').subscribe(
+      this.dataBD.crud_Ciudades(unaCiudad, 'eliminar').subscribe(
         (res: any) => {
           this.unResultado = res;
   
@@ -55,15 +53,15 @@ export class PersonasComponent {
              Swal.fire({
               icon: 'info',
               title: 'Registro eliminado',
-              text: 'Persona Eliminada',
+              text: 'Ciudad Eliminada',
             });
   
             this.unaAccion = 'Mensaje:';
-            this.unMensaje = 'Persona Eliminada';
+            this.unMensaje = 'Ciudad Eliminada';
             setTimeout(() => (this.unMensaje = ''), 3000);
   
   
-            this.cargarPersonasBD() ;
+            this.cargarCiudadesBD() ;
   
           } else {
             Swal.fire({
@@ -83,6 +81,4 @@ export class PersonasComponent {
         }
       );
     }
-  }
-
-
+}
