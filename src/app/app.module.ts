@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -13,6 +13,7 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { AddEditUsuarioComponent } from './components/add-edit-usuario/add-edit-usuario.component';
 import { CiudadesComponent } from './pages/ciudades/ciudades.component';
 import { AddEditCiudadComponent } from './components/add-edit-ciudad/add-edit-ciudad.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +25,15 @@ import { AddEditCiudadComponent } from './components/add-edit-ciudad/add-edit-ci
     UsuariosComponent,
     AddEditUsuarioComponent,
     CiudadesComponent,
-    AddEditCiudadComponent
+    AddEditCiudadComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration()

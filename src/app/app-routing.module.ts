@@ -7,6 +7,7 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { AddEditUsuarioComponent } from './components/add-edit-usuario/add-edit-usuario.component';
 import { CiudadesComponent } from './pages/ciudades/ciudades.component';
 import { AddEditCiudadComponent } from './components/add-edit-ciudad/add-edit-ciudad.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'usuario/:id', component: AddEditUsuarioComponent},
   { path: 'ciudades', component: CiudadesComponent},
   { path: 'ciudad/:id', component: AddEditCiudadComponent},
+  { path: 'login', component: LoginComponent},
 
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 

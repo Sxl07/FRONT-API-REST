@@ -1,26 +1,28 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_LOCAL } from '../config/url.servicios';
 import { map } from 'rxjs';
 import { Persona } from '../interfaces/persona.interface';
 import { Usuario } from '../interfaces/usuario.interface';
 import { Ciudad } from '../interfaces/ciudad.interface';
+import { AuthService } from '../auth/auth.service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConexionAPIService {
-
-  constructor( public http : HttpClient) { }
-  getPersonas(): any {
+  constructor( public http: HttpClient,public service:AuthService) { }
+  public getPersonas():any{
     let url = `${URL_LOCAL}/persona`;
-
-    return this.http.get(url).pipe(
+    const headers_object = new HttpHeaders().set('x-token',this.service.getToken())
+  
+    return this.http.get(url,{headers:headers_object}).pipe(
       map((resp:any) => {
-        console.log('DATOS', resp);
+        console.log('Datos',resp)
         return resp.data;
+  
       })
-    );
+    )
   }
 
   crud_Personas(unaPersona: Persona, unaAccion: string):any {
@@ -78,16 +80,19 @@ export class ConexionAPIService {
     );
   }
 /*----------------------------------------------------------------------- */
-  getUsuarios(): any {
-    let url = `${URL_LOCAL}/usuario`;
+public getUsuarios():any{
+  let url = `${URL_LOCAL}/usuario`;
+  const headers_object = new HttpHeaders().set('x-token',this.service.getToken())
 
-    return this.http.get(url).pipe(
-      map((resp:any) => {
-        console.log('DATOS', resp);
-        return resp.data;
-      })
-    );
-  }
+  return this.http.get(url,{headers:headers_object}).pipe(
+    map((resp:any) => {
+      console.log('Datos',resp)
+      return resp.data;
+
+    })
+  )
+
+}
   crud_Usuarios(unUsuario: Usuario, unaAccion: string):any {
     //console.log(unExpediente);
 
@@ -148,15 +153,17 @@ export class ConexionAPIService {
   }
   /*----------------------------------------------------------------------- */
 
-  getCiudades(): any {
+  public getCiudades():any{
     let url = `${URL_LOCAL}/ciudad`;
-
-    return this.http.get(url).pipe(
+    const headers_object = new HttpHeaders().set('x-token',this.service.getToken())
+  
+    return this.http.get(url,{headers:headers_object}).pipe(
       map((resp:any) => {
-        console.log('DATOS', resp);
+        console.log('Datos',resp)
         return resp.data;
+  
       })
-    );
+    )
   }
 
   crud_Ciudades(unaCiudad: Ciudad, unaAccion: string):any {

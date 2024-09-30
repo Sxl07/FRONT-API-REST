@@ -42,44 +42,44 @@ export class UsuariosComponent {
   }
 
 
-  eliminarUsuario(unUsuario:Usuario){
-      //console.log(this.unaDivision);
-      this.dataBD.crud_Usuarios(unUsuario, 'eliminar').subscribe(
-        (res: any) => {
-          this.unResultado = res;
-  
-          //console.log(this.unResultado);
-          if (this.unResultado.ok == true) {
-  
-             Swal.fire({
-              icon: 'info',
-              title: 'Registro eliminado',
-              text: 'Usuario Eliminado',
-            });
-  
-            this.unaAccion = 'Mensaje:';
-            this.unMensaje = 'Usuario Eliminado';
-            setTimeout(() => (this.unMensaje = ''), 3000);
-  
-  
-            this.cargarUsuariosBD() ;
-  
-          } else {
-            Swal.fire({
-              icon: 'info',
-              title: 'Error',
-              text: this.unResultado.msg + "Error:"+this.unResultado.err.original.sqlMessage
-            });
-      
-  
-            this.unaAccion = 'Error:';
-            this.unMensaje = this.unResultado.msg;
-            setTimeout(() => (this.unMensaje = ''), 3000);
-          }
+  eliminarUsuario(unaPersona:Usuario){
+    //console.log(this.unaDivision);
+    this.dataBD.crud_Usuarios(unaPersona, 'eliminar').subscribe(
+      (res: any) => {
+        this.unResultado = res;
+
+        //console.log(this.unResultado);
+        if (this.unResultado.ok == true) {
+
+           Swal.fire({
+            icon: 'info',
+            title: 'Registro eliminado',
+            text: 'Usuario Eliminado',
+          });
+
+          this.unaAccion = 'Mensaje:';
+          this.unMensaje = 'Usuario Eliminada';
+          setTimeout(() => (this.unMensaje = ''), 3000);
+
+
+          this.cargarUsuariosBD() ;
+
+        } else {
+          Swal.fire({
+            icon: 'info',
+            title: 'Error',
+            text: this.unResultado.msg + "Error:" + this.unResultado.error.original.sqlMessage,
+          });
+    
+
+          this.unaAccion = 'Error:';
+          this.unMensaje = this.unResultado.msg;
+          setTimeout(() => (this.unMensaje = ''), 3000);
         }
-        ,(error:any) => {
-          console.error(error)
-        }
-      );
-    }
+      }
+      ,(error:any) => {
+        console.error(error)
+      }
+    );
+  }
 }
